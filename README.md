@@ -1,7 +1,8 @@
 Coverage: 34%
 # Project Title
 
-One Paragraph of project description goes here
+Inventory-Management-System is a Java program using an MySQL backend.
+This project is done as part of the QA Academy.
 
 ## Getting Started
 
@@ -12,7 +13,7 @@ These instructions will get you a copy of the project up and running on your loc
 What things you need to install the software and how to install them
 
 ```
-Give examples
+Java 11
 ```
 
 ### Installing
