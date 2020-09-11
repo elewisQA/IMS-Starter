@@ -31,7 +31,7 @@ public class DBUtils {
 		} catch (Exception e) {
 			LOGGER.error(e);
 		}
-		this.DB_URL = dbProps.getProperty("db.url", "jdbc:mysql://localhost:3306/ims");
+		this.DB_URL = dbProps.getProperty("db.url", "jdbc:mysql://localhost:3306/ims?db_name&serverTimezone=UTC");
 		this.DB_USER = dbProps.getProperty("db.user", "java");
 		this.DB_PASS = dbProps.getProperty("db.password", "password");
 	}
@@ -40,6 +40,10 @@ public class DBUtils {
 		this("src/main/resources/db.properties");
 	}
 
+	public int init() {
+		return this.init("src/main/resources/sql-schema.sql", "src/main/resources/sql-data.sql");
+	}
+	
 	public int init(String... paths) {
 		int modified = 0;
 
