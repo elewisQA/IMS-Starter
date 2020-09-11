@@ -31,9 +31,9 @@ public class DBUtils {
 		} catch (Exception e) {
 			LOGGER.error(e);
 		}
-		this.DB_URL = dbProps.getProperty("db.url", "");
-		this.DB_USER = dbProps.getProperty("db.user", "");
-		this.DB_PASS = dbProps.getProperty("db.password", "");
+		this.DB_URL = dbProps.getProperty("db.url", "jdbc:mysql://localhost:3306/ims");
+		this.DB_USER = dbProps.getProperty("db.user", "java");
+		this.DB_PASS = dbProps.getProperty("db.password", "password");
 	}
 
 	public DBUtils() {
