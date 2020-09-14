@@ -22,9 +22,10 @@ CREATE TABLE IF NOT EXISTS `ims`.`orders` (
 	FOREIGN KEY(`cid`) REFERENCES `ims`.`customers`(`id`)
 );
 
-CREATE TABLE IF NOT EXISTS `ims`.`purchases` (
+CREATE TABLE IF NOT EXISTS `ims`.`order_items` (
 	`oid` INT(11),
 	`iid` INT(11),
+	`qty` INT(11) DEFAULT 1,
 	PRIMARY KEY(`oid`,`iid`),
 	FOREIGN KEY(`oid`) REFERENCES `ims`.`orders`(`id`),
 	FOREIGN KEY(`iid`) REFERENCES `ims`.`items`(`id`)
