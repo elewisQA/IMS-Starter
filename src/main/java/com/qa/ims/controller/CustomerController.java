@@ -77,7 +77,9 @@ public class CustomerController implements CrudController<Customer> {
 	public int delete() {
 		LOGGER.info("Please enter the id of the customer you would like to delete");
 		Long id = utils.getLong();
+		LOGGER.info("Customer deleted.");
 		return customerDAO.delete(id);
+		
 	}
 
 }
