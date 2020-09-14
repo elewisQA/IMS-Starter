@@ -17,10 +17,11 @@ public class OrderItemController implements CrudController<OrderItem> {
 	private Utils utils;
 	private Long oid;
 	
-	public OrderItemController(OrderItemDAO orderItemDAO, Utils utils) {
+	public OrderItemController(OrderItemDAO orderItemDAO, Utils utils, Long oid) {
 		super();
 		this.orderItemDAO = orderItemDAO;
 		this.utils = utils;
+		this.oid = oid;
 	}
 
 	@Override 

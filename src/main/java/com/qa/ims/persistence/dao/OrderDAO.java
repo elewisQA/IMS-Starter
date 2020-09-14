@@ -17,7 +17,7 @@ import com.qa.ims.utils.DBUtils;
 
 public class OrderDAO implements Dao<Order> {
 	
-	public static final Logger LOGGER = LogManager.getFormatterLogger();
+	public static final Logger LOGGER = LogManager.getLogger();
 	
 	@Override
 	public Order modelFromResultSet(ResultSet resultSet) throws SQLException {
