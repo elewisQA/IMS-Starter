@@ -58,6 +58,7 @@ public class OrderDAO implements Dao<Order> {
 		return null;
 	}
 	
+	@Override
 	public Order create(Order order) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
@@ -84,6 +85,7 @@ public class OrderDAO implements Dao<Order> {
 		return null;
 	}
 	
+	@Override
 	public Order update(Order order) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
@@ -100,7 +102,7 @@ public class OrderDAO implements Dao<Order> {
 	public int delete(long oid) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
-			return statement.executeUpdate("delete from customers where id = " + oid);
+			return statement.executeUpdate("delete from orders where id = " + oid);
 		} catch (Exception e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());

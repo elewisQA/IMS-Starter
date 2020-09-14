@@ -77,17 +77,19 @@ public class Order {
 		if (getClass() != obj.getClass())
 			return false;
 		Order other = (Order) obj;
-		if (getCid() == null) {
+		if (getCid() == null) 
 			if (other.getCid() != null)
 				return false;
-		} else if (!getCid().equals(other.getCid()))
-			return false;
+		if (getOid() == null)
+			if (other.getOid() != null)
+				return false;
 		if (address == null) {
 			if (other.address != null)
 				return false;
 		} else if (!address.equals(other.address))
 			return false;
-		if (fulfilled == other.getFulfilled()) //TODO simplify
+		if (fulfilled == other.getFulfilled())
 			return true;
+		return true;
 	}
 }
