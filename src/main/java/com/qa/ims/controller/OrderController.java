@@ -1,5 +1,6 @@
 package com.qa.ims.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -9,6 +10,7 @@ import com.qa.ims.persistence.dao.OrderDAO;
 import com.qa.ims.persistence.dao.OrderItemDAO;
 import com.qa.ims.persistence.domain.Order;
 import com.qa.ims.persistence.domain.OrderUpdateDomain;
+import com.qa.ims.persistence.domain.OrderReadDomain;
 import com.qa.ims.utils.Utils;
 
 public class OrderController implements CrudController<Order> {
@@ -24,6 +26,37 @@ public class OrderController implements CrudController<Order> {
 		this.utils = utils;
 	}
 	
+	public List<Order> read() {
+		OrderReadDomain domain;
+		
+		while (true) {
+			LOGGER.info("What should be read:");
+			OrderReadDomain.printDomains();
+			
+			domain = OrderReadDomain.getDomain(utils);
+			List<Order> toReturn = null;
+			switch (domain) {
+			case ALL:
+				toReturn = readAll();
+				break;
+			case HISTORY:
+				toReturn = readHistory();
+				break;
+			case CUSTOMER:
+				toReturn = readCustomer();
+				break;
+			case ONE:
+				toReturn = readOne();
+				break;
+			case RETURN:
+				return toReturn;
+			default:
+				break;
+			}
+			return toReturn;
+		}
+	}
+	
 	@Override 
 	public List<Order> readAll() {
 		List<Order> orders = orderDAO.readAll();
@@ -33,14 +66,40 @@ public class OrderController implements CrudController<Order> {
 		return orders;
 	}
 	
+	public List<Order> readHistory() {
+		List<Order> orders = orderDAO.readHistory();
+		for (Order order : orders) {
+			LOGGER.info(order.toString());
+		}
+		return orders;
+	}
+	
+	public List<Order> readCustomer() {
+		LOGGER.info("Enter the id of the customer whose orders you want to view");
+		Long cid = utils.getLong();
+		List<Order> orders = orderDAO.readCustomer(cid);
+		for (Order order : orders) {
+			LOGGER.info(order.toString());
+		}
+		return orders;
+	}
+	
+	public List<Order> readOne() {
+		LOGGER.info("Enter the id of the order you want to view");
+		Long oid = utils.getLong();
+		List<Order> orders = new ArrayList<>();
+		orders.add(orderDAO.readOrder(oid));
+		return orders;
+	}
+	
 	@Override
 	public Order create() {
 		LOGGER.info("Please enter a Customer id");
 		Long cid = utils.getLong();
 		LOGGER.info("Please enter an address");
 		String address = utils.getString();
-		//LOGGER.info("Please enter a fulfilled state");
-		Boolean fulfilled = false; //TODO - implement utils.getBoolean();
+		LOGGER.info("Please enter a fulfilled state");
+		Boolean fulfilled = utils.getBoolean();
 		Order order = orderDAO.create(new Order(cid, address, fulfilled));
 		return order;
 	}
@@ -68,6 +127,8 @@ public class OrderController implements CrudController<Order> {
 				break;
 			case RETURN:
 				return toReturn;
+			default:
+				break;
 			}
 		}
 	}
@@ -78,7 +139,7 @@ public class OrderController implements CrudController<Order> {
 		LOGGER.info("Please enter an address");
 		String address = utils.getString();
 		LOGGER.info("Please enter a fulfilled state");
-		Boolean fulfilled = true; //TODO - implement utils.getBoolean();
+		Boolean fulfilled = utils.getBoolean();
 		Order order = orderDAO.update(new Order(oid, cid, address, fulfilled));
 		LOGGER.info("Order updated");
 		return order;
