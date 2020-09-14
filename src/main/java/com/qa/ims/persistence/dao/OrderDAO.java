@@ -21,7 +21,7 @@ public class OrderDAO implements Dao<Order> {
 	
 	@Override
 	public Order modelFromResultSet(ResultSet resultSet) throws SQLException {
-		Long oid = resultSet.getLong("oid");
+		Long oid = resultSet.getLong("id");
 		Long cid = resultSet.getLong("cid");
 		String address = resultSet.getString("address");
 		Boolean fulfilled = resultSet.getBoolean("fulfilled");
@@ -75,7 +75,7 @@ public class OrderDAO implements Dao<Order> {
 	public Order readOrder(Long oid) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("SELECT * FROM orders WHERE oid = " + oid);) {
+				ResultSet resultSet = statement.executeQuery("SELECT * FROM orders WHERE id = " + oid);) {
 			resultSet.next();
 			return modelFromResultSet(resultSet);
 		} catch (Exception e) {
@@ -102,6 +102,7 @@ public class OrderDAO implements Dao<Order> {
 	public int delete(long oid) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
+			statement.executeUpdate("delete from order_items where oid = " + oid); // Foreign Key constraint
 			return statement.executeUpdate("delete from orders where id = " + oid);
 		} catch (Exception e) {
 			LOGGER.debug(e);

@@ -39,7 +39,7 @@ public class OrderItemController implements CrudController<OrderItem> {
 		Long iid = utils.getLong();
 		LOGGER.info("Please enter a quantity");
 		Long qty = utils.getLong();
-		OrderItem orderItem = orderItemDAO.create(new OrderItem(oid, iid, qty));
+		OrderItem orderItem = orderItemDAO.create(new OrderItem(this.oid, iid, qty));
 		return orderItem;
 	}
 	

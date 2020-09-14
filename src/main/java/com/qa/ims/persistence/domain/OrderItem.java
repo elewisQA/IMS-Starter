@@ -6,11 +6,11 @@ public class OrderItem {
 	private Long iid;
 	private Long qty;
 	
-	public OrderItem(Long cid, Long qty) {
+	/*public OrderItem(Long cid, Long qty) {
 		// TODO is this necessary?
 		this.setIid(cid);
 		this.setQty(qty);
-	}
+	}*/
 	
 	public OrderItem(Long oid, Long iid, Long qty) {
 		this.setOid(oid);

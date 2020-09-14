@@ -61,8 +61,8 @@ public class OrderItemDAO implements Dao<OrderItem> {
 	public OrderItem create(OrderItem orderItem) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("INSERT INTO order_items(iid, qty) VALUES(" 
-				+ orderItem.getIid() + "," + orderItem.getQty() + ")");
+			statement.executeUpdate("INSERT INTO order_items(oid, iid, qty) VALUES(" 
+				+ orderItem.getOid() + "," + orderItem.getIid() + "," + orderItem.getQty() + ")");
 			return readLatest();
 		} catch (Exception e) {
 			LOGGER.debug(e);

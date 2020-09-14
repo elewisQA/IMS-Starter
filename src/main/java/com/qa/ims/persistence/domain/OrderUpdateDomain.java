@@ -32,7 +32,7 @@ public enum OrderUpdateDomain {
 		OrderUpdateDomain domain;
 		while (true) {
 			try {
-				domain = OrderUpdateDomain.valueOf(utils.getString());
+				domain = OrderUpdateDomain.valueOf(utils.getString().toUpperCase());
 				break;
 			} catch (IllegalArgumentException e) {
 				LOGGER.error("Invalid selection please try again");

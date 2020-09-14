@@ -39,8 +39,8 @@ public class OrderController implements CrudController<Order> {
 		Long cid = utils.getLong();
 		LOGGER.info("Please enter an address");
 		String address = utils.getString();
-		LOGGER.info("Please enter a fulfilled state");
-		Boolean fulfilled = true; //TODO - implement utils.getBoolean();
+		//LOGGER.info("Please enter a fulfilled state");
+		Boolean fulfilled = false; //TODO - implement utils.getBoolean();
 		Order order = orderDAO.create(new Order(cid, address, fulfilled));
 		return order;
 	}
@@ -62,6 +62,7 @@ public class OrderController implements CrudController<Order> {
 			switch(domain) {
 			case DETAILS:
 				toReturn = updateDetails(oid);
+				break;
 			case ITEMS:
 				updateOrderItems(oid);
 				break;
