@@ -39,8 +39,8 @@ public class OrderController implements CrudController<Order> {
 		Long cid = utils.getLong();
 		LOGGER.info("Please enter an address");
 		String address = utils.getString();
-		//LOGGER.info("Please enter a fulfilled state");
-		Boolean fulfilled = false; //TODO - implement utils.getBoolean();
+		LOGGER.info("Please enter a fulfilled state");
+		Boolean fulfilled = utils.getBoolean();
 		Order order = orderDAO.create(new Order(cid, address, fulfilled));
 		return order;
 	}
@@ -78,7 +78,7 @@ public class OrderController implements CrudController<Order> {
 		LOGGER.info("Please enter an address");
 		String address = utils.getString();
 		LOGGER.info("Please enter a fulfilled state");
-		Boolean fulfilled = true; //TODO - implement utils.getBoolean();
+		Boolean fulfilled = utils.getBoolean();
 		Order order = orderDAO.update(new Order(oid, cid, address, fulfilled));
 		LOGGER.info("Order updated");
 		return order;
