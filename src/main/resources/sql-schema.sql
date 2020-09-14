@@ -18,6 +18,8 @@ CREATE TABLE IF NOT EXISTS `ims`.`items` (
 CREATE TABLE IF NOT EXISTS `ims`.`orders` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
 	`cid` INT(11),
+	`address` VARCHAR(40) NULL DEFAULT NULL,
+	`fulfilled` BOOLEAN DEFAULT FALSE,
 	PRIMARY KEY(`id`),
 	FOREIGN KEY(`cid`) REFERENCES `ims`.`customers`(`id`)
 );
