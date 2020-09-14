@@ -65,11 +65,12 @@ public class Item {
 		if (getClass() != obj.getClass()) 
 			return false;
 		Item other = (Item) obj;
-		if (getName() == null) {
+		if (name == null) {
 			if (other.getName() != null)
-				return false
-		} else if (!getName().contentEquals(other.getName()))
+				return false;
+		} else if (!getName().contentEquals(other.getName())) {
 			return false;
+		}
 		if (id == null) {
 			if (other.id != null) 
 				return false;
