@@ -26,7 +26,8 @@ public class OrderController implements CrudController<Order> {
 		this.utils = utils;
 	}
 	
-	public List<Order> read() {
+	@Override
+	public List<Order> readAll() {
 		OrderReadDomain domain;
 		
 		while (true) {
@@ -37,7 +38,7 @@ public class OrderController implements CrudController<Order> {
 			List<Order> toReturn = null;
 			switch (domain) {
 			case ALL:
-				toReturn = readAll();
+				toReturn = readAllActual();
 				break;
 			case HISTORY:
 				toReturn = readHistory();
@@ -48,17 +49,29 @@ public class OrderController implements CrudController<Order> {
 			case ONE:
 				toReturn = readOne();
 				break;
+			case COST:
+				readCost();
+				break;
 			case RETURN:
 				return toReturn;
 			default:
 				break;
 			}
-			return toReturn;
 		}
 	}
 	
+	/*
 	@Override 
 	public List<Order> readAll() {
+		List<Order> orders = orderDAO.readAll();
+		for (Order order : orders) {
+			LOGGER.info(order.toString());
+		}
+		return orders;
+	}
+	*/
+	
+	public List<Order> readAllActual() {
 		List<Order> orders = orderDAO.readAll();
 		for (Order order : orders) {
 			LOGGER.info(order.toString());
@@ -90,6 +103,14 @@ public class OrderController implements CrudController<Order> {
 		List<Order> orders = new ArrayList<>();
 		orders.add(orderDAO.readOrder(oid));
 		return orders;
+	}
+	
+	public void readCost() {
+		LOGGER.info("Enter the id of the order which cost you'd like to calculate");
+		Long oid = utils.getLong();
+		Double cost = orderDAO.readCost(oid);
+		LOGGER.info("The total-cost of order " + oid + " is: £" + cost);
+		return;
 	}
 	
 	@Override

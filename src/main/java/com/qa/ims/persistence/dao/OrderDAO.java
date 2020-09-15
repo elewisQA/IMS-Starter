@@ -90,6 +90,20 @@ public class OrderDAO implements Dao<Order> {
 		return null;
 	}
 	
+	public Double readCost(Long oid) {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement.executeQuery(
+						"SELECT SUM(order_items.qty * items.cost) AS cost FROM order_items, items WHERE order_items.oid = " + oid + " AND order_items.iid = items.id")) {
+			resultSet.next();
+			return resultSet.getDouble("cost");
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return null;
+	}
+	
 	@Override
 	public Order create(Order order) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
