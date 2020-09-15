@@ -8,7 +8,9 @@ import com.qa.ims.utils.Utils;
 public enum OrderReadDomain {
 	ALL("All orders"),
 	HISTORY("All fulfilled orders"),
+	CUSTOMER("All orders by a specific customer"),
 	ONE("A specific order"),
+	COST("Cost of a specific order"),
 	RETURN("Return to order operations");
 	
 	public static final Logger LOGGER = LogManager.getLogger();
