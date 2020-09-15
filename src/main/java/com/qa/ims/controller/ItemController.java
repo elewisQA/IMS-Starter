@@ -34,9 +34,9 @@ public class ItemController implements CrudController<Item> {
 	@Override
 	public Item create() {
 		LOGGER.info("Please enter item name");
-		String name = utils.getString();
+		String name = utils.getString().toUpperCase();
 		LOGGER.info("Please enter a description");
-		String description = utils.getString();
+		String description = utils.getString().toUpperCase();
 		Item item = itemDAO.create(new Item(name, description));
 		LOGGER.info("Item created");
 		return item;
@@ -47,9 +47,9 @@ public class ItemController implements CrudController<Item> {
 		LOGGER.info("Please enter the id of the item you would like to update");
 		Long id = utils.getLong();
 		LOGGER.info("Please enter a name");
-		String name = utils.getString();
+		String name = utils.getString().toUpperCase();
 		LOGGER.info("Please enter a description");
-		String description = utils.getString();
+		String description = utils.getString().toUpperCase();
 		Item item = itemDAO.update(new Item(id, name, description));
 		LOGGER.info("Item updated");
 		return item;
