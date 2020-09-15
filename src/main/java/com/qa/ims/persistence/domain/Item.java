@@ -96,7 +96,9 @@ public class Item {
 		if (cost == null) {
 			if (other.cost != null)
 				return false;
-		} else if (!cost.equals(other.getCost()))
+		} else if (!cost.equals(other.getCost())) {
+			return false;
+		}
 		return true;
 	}
 }
