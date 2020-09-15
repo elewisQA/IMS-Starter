@@ -43,6 +43,10 @@ public class CustomerDAO implements Dao<Customer> {
 		} catch (SQLException e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
+		} catch (Exception e) {
+			LOGGER.error("Generic Exception - Something went seriously wrong.");
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
 		}
 		return new ArrayList<>();
 	}
@@ -53,7 +57,11 @@ public class CustomerDAO implements Dao<Customer> {
 				ResultSet resultSet = statement.executeQuery("SELECT * FROM customers ORDER BY id DESC LIMIT 1");) {
 			resultSet.next();
 			return modelFromResultSet(resultSet);
+		} catch (SQLException e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
 		} catch (Exception e) {
+			LOGGER.error("Generic Exception - Something went seriously wrong.");
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
 		}
@@ -72,7 +80,11 @@ public class CustomerDAO implements Dao<Customer> {
 			statement.executeUpdate("INSERT INTO customers(first_name, surname) values('" + customer.getFirstName()
 					+ "','" + customer.getSurname() + "')");
 			return readLatest();
+		} catch (SQLException e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
 		} catch (Exception e) {
+			LOGGER.error("Generic Exception - Something went seriously wrong.");
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
 		}
@@ -85,7 +97,11 @@ public class CustomerDAO implements Dao<Customer> {
 				ResultSet resultSet = statement.executeQuery("SELECT * FROM customers where id = " + id);) {
 			resultSet.next();
 			return modelFromResultSet(resultSet);
+		} catch (SQLException e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
 		} catch (Exception e) {
+			LOGGER.error("Generic Exception - Something went seriously wrong.");
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
 		}
@@ -106,7 +122,11 @@ public class CustomerDAO implements Dao<Customer> {
 			statement.executeUpdate("update customers set first_name ='" + customer.getFirstName() + "', surname ='"
 					+ customer.getSurname() + "' where id =" + customer.getId());
 			return readCustomer(customer.getId());
+		} catch (SQLException e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
 		} catch (Exception e) {
+			LOGGER.error("Generic Exception - Something went seriously wrong.");
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
 		}
@@ -123,7 +143,11 @@ public class CustomerDAO implements Dao<Customer> {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
 			return statement.executeUpdate("delete from customers where id = " + id);
+		} catch (SQLException e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
 		} catch (Exception e) {
+			LOGGER.error("Generic Exception - Something went seriously wrong.");
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
 		}
