@@ -40,6 +40,10 @@ public class OrderItemDAO implements Dao<OrderItem> {
 		} catch (SQLException e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
+		} catch (Exception e) {
+			LOGGER.error("Generic Exception - Something went seriously wrong.");
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
 		}
 		return new ArrayList<>();
 	}
@@ -50,7 +54,11 @@ public class OrderItemDAO implements Dao<OrderItem> {
 				ResultSet resultSet = statement.executeQuery("SELECT * FROM order_items ORDER BY oid DESC LIMIT 1");) {
 			resultSet.next();
 			return modelFromResultSet(resultSet);
+		} catch (SQLException e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
 		} catch (Exception e) {
+			LOGGER.error("Generic Exception - Something went seriously wrong.");
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
 		}
@@ -64,7 +72,11 @@ public class OrderItemDAO implements Dao<OrderItem> {
 			statement.executeUpdate("INSERT INTO order_items(oid, iid, qty) VALUES(" 
 				+ orderItem.getOid() + "," + orderItem.getIid() + "," + orderItem.getQty() + ")");
 			return readLatest();
+		} catch (SQLException e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
 		} catch (Exception e) {
+			LOGGER.error("Generic Exception - Something went seriously wrong.");
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
 		}
@@ -77,7 +89,11 @@ public class OrderItemDAO implements Dao<OrderItem> {
 				ResultSet resultSet = statement.executeQuery("SELECT * FROM order_items WHERE oid = " + oid);) {
 			resultSet.next();
 			return modelFromResultSet(resultSet);
+		} catch (SQLException e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
 		} catch (Exception e) {
+			LOGGER.error("Generic Exception - Something went seriously wrong.");
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
 		}
@@ -91,7 +107,11 @@ public class OrderItemDAO implements Dao<OrderItem> {
 			statement.executeUpdate("UPDATE order_items SET iid = "
 				+ orderItem.getIid() + ", qty = " + orderItem.getQty());
 			return readOrderItem(orderItem.getOid());
+		} catch (SQLException e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
 		} catch (Exception e) {
+			LOGGER.error("Generic Exception - Something went seriously wrong.");
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
 		}
@@ -103,7 +123,11 @@ public class OrderItemDAO implements Dao<OrderItem> {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
 			return statement.executeUpdate("delete from order_items where iid = " + oid);
+		} catch (SQLException e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
 		} catch (Exception e) {
+			LOGGER.error("Generic Exception - Something went seriously wrong.");
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
 		}

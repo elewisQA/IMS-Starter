@@ -39,6 +39,10 @@ public class ItemDAO implements Dao<Item> {
 		} catch (SQLException e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
+		} catch (Exception e) {
+			LOGGER.error("Generic Exception - Something went seriously wrong.");
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
 		}
 		return new ArrayList<>();
 	}
@@ -49,7 +53,11 @@ public class ItemDAO implements Dao<Item> {
 				ResultSet resultSet = statement.executeQuery("SELECT * FROM items ORDER BY id DESC LIMIT 1");) {
 			resultSet.next();
 			return modelFromResultSet(resultSet);
+		} catch (SQLException e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
 		} catch (Exception e) {
+			LOGGER.error("Generic Exception - Something went seriously wrong.");
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
 		}
@@ -63,7 +71,11 @@ public class ItemDAO implements Dao<Item> {
 				Statement statement = connection.createStatement();) {
 			statement.executeLargeUpdate("INSERT INTO items(name, description, cost) VALUES('" + item.getName() + "','" + item.getDescription() + "', " + item.getCost() + ")");
 			return readLatest();
+		} catch (SQLException e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
 		} catch (Exception e) {
+			LOGGER.error("Generic Exception - Something went seriously wrong.");
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
 		}
@@ -77,7 +89,11 @@ public class ItemDAO implements Dao<Item> {
 				ResultSet resultSet = statement.executeQuery("SELECT * FROM items WHERE id = " + id);) {
 			resultSet.next();
 			return modelFromResultSet(resultSet);
+		} catch (SQLException e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
 		} catch (Exception e) {
+			LOGGER.error("Generic Exception - Something went seriously wrong.");
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
 		}
@@ -90,7 +106,11 @@ public class ItemDAO implements Dao<Item> {
 				Statement statement = connection.createStatement();) {
 			statement.executeUpdate("UPDATE items SET name = '" + item.getName() + "', description ='" + item.getDescription() + "', cost = " + item.getCost() + " WHERE id =" + item.getId());
 			return readItem(item.getId());
+		} catch (SQLException e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
 		} catch (Exception e) {
+			LOGGER.error("Generic Exception - Something went seriously wrong.");
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
 		}
@@ -102,7 +122,11 @@ public class ItemDAO implements Dao<Item> {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
 			return statement.executeUpdate("DELETE FROM items WHERE id = " + id);
+		} catch (SQLException e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
 		} catch (Exception e) {
+			LOGGER.error("Generic Exception - Something went seriously wrong.");
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
 		}
