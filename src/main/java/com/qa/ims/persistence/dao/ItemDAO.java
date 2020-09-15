@@ -22,7 +22,8 @@ public class ItemDAO implements Dao<Item> {
 		Long id = resultSet.getLong("id");
 		String name = resultSet.getString("name");
 		String description = resultSet.getString("description");
-		return new Item(id, name, description);
+		Long cost = resultSet.getLong("cost");
+		return new Item(id, name, description, cost);
 	}
 	
 	@Override
@@ -68,7 +69,7 @@ public class ItemDAO implements Dao<Item> {
 	public Item create(Item item) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
-			statement.executeLargeUpdate("INSERT INTO items(name, description) VALUES('" + item.getName() + "','" + item.getDescription() + "')");
+			statement.executeLargeUpdate("INSERT INTO items(name, description, cost) VALUES('" + item.getName() + "','" + item.getDescription() + "', " + item.getCost() + ")");
 			return readLatest();
 		} catch (SQLException e) {
 			LOGGER.debug(e);
@@ -103,7 +104,7 @@ public class ItemDAO implements Dao<Item> {
 	public Item update(Item item) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("UPDATE items SET name = '" + item.getName() + "', description ='" + item.getDescription() + "' WHERE id =" + item.getId());
+			statement.executeUpdate("UPDATE items SET name = '" + item.getName() + "', description ='" + item.getDescription() + "', cost = " + item.getCost() + " WHERE id =" + item.getId());
 			return readItem(item.getId());
 		} catch (SQLException e) {
 			LOGGER.debug(e);

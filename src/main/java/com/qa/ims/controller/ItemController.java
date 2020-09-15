@@ -37,7 +37,9 @@ public class ItemController implements CrudController<Item> {
 		String name = utils.getString().toUpperCase();
 		LOGGER.info("Please enter a description");
 		String description = utils.getString().toUpperCase();
-		Item item = itemDAO.create(new Item(name, description));
+		LOGGER.info("Please enter a cost");
+		Long cost = utils.getLong();
+		Item item = itemDAO.create(new Item(name, description, cost));
 		LOGGER.info("Item created");
 		return item;
 	}
@@ -50,7 +52,9 @@ public class ItemController implements CrudController<Item> {
 		String name = utils.getString().toUpperCase();
 		LOGGER.info("Please enter a description");
 		String description = utils.getString().toUpperCase();
-		Item item = itemDAO.update(new Item(id, name, description));
+		LOGGER.info("Please enter a cost");
+		Long cost = utils.getLong();
+		Item item = itemDAO.update(new Item(id, name, description, cost));
 		LOGGER.info("Item updated");
 		return item;
 	}

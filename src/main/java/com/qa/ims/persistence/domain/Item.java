@@ -2,19 +2,21 @@ package com.qa.ims.persistence.domain;
 
 public class Item {
 	
-	private Long id;
+	private Long id, cost;
 	private String name;
 	private String description;
 	
-	public Item(String name, String description) {
+	public Item(String name, String description, Long cost) {
 		this.setName(name);
 		this.setDescription(description);
+		this.setCost(cost);
 	}
 	
-	public Item(Long id, String name, String description) {
+	public Item(Long id, String name, String description, Long cost) {
 		this.setId(id);
 		this.setName(name);
 		this.setDescription(description);
+		this.setCost(cost);
 	}
 
 	public Long getId() {
@@ -41,9 +43,17 @@ public class Item {
 		this.description = description;
 	}
 	
+	public Long getCost() {
+		return cost;
+	}
+	
+	public void setCost(Long cost) {
+		this.cost = cost;
+	}
+	
 	@Override
 	public String toString() {
-		return "id:" + id + " name:" + name + " description:" + description;
+		return "id:" + id + " name:" + name + " description:" + description + " cost: £" + cost;
 	}
 	
 	@Override
