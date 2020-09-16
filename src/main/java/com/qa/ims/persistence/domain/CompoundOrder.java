@@ -17,10 +17,8 @@ public class CompoundOrder extends Order{
 	
 	@Override
 	public String toString() {
-		return "Order ID:" + oid 
-				+ " Customer ID:" + cid 
-				+ " Total-Order Cost:" + cost
-				+ " Delivery Address:" + address 
-				+ " Order Dispatched:" + fulfilled;
+		String toReturn = String.format("Order-ID: %-3d | Customer-ID: %-3d | Total Cost: £%-4.2f | Delivery Address: %-40s | Dispatched: %b", 
+				oid, cid, cost, address, fulfilled);
+		return toReturn;
 	}
 }
