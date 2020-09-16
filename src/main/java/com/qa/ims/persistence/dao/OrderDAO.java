@@ -74,38 +74,37 @@ public class OrderDAO implements Dao<Order> {
 	public HashMap<CompoundOrder, List<CompoundOrderItem>> readEverything() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement orderStatement = connection.createStatement();
-				// Complex query to get order and order cost using Order_Items and Items tables 
-				ResultSet orderResults = orderStatement.executeQuery(""
-						+ "SELECT orders.id, orders.cid, order_items.iid, SUM(items.cost), orders.address, orders.fulfilled "
-						+ "FROM orders, order_items, items "
-						+ "WHERE orders.id = order_items.oid "
-						+ "AND order_items.iid = items.id");
 				// Get everything from Order_items table
-				Statement itemStatement = connection.createStatement();
-				ResultSet orderItemResults = itemStatement.executeQuery(""
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement.executeQuery(""
 						+ "SELECT order_items.id, order_items.iid, order_items.oid, items.name, items.cost "
 						+ "FROM order_items, items "
 						+ "WHERE order_items.iid = items.id")) {
-			List<CompoundOrder> orders = new ArrayList<>();
+			// Storage Objects
+			List<Order> orders = readAll();
 			HashMap<Long, List<CompoundOrderItem>> ordersMap =  new HashMap<>();
-			while (orderResults.next()) {
-				orders.add(modelCompoundFromResultSet(orderResults));
-				ordersMap.put(modelCompoundFromResultSet(orderResults).getOid(), new ArrayList<CompoundOrderItem>());
+			
+			// Populate Map
+			for (Order order : orders) {
+				ordersMap.put(order.getOid(), new ArrayList<CompoundOrderItem>());
 			}
 			
-			// Store a list of all order-items using a map with key of order-id
-			// This gets a list by id, updates it and puts it back
-			// TODO grab reference so I don't have to put-back
-			while (orderItemResults.next()) {
-				CompoundOrderItem oi = modelCompoundOrderItemFromResultSet(orderItemResults);
+			// Iterate through Results - putting into map with key Order-ID
+			while (resultSet.next()) {
+				CompoundOrderItem oi = modelCompoundOrderItemFromResultSet(resultSet);
 				List<CompoundOrderItem> list = ordersMap.get(oi.getOid());
 				list.add(oi);
 				ordersMap.put(oi.getOid(), list);		
 			}
 			
+			// Calculate Cost of each order
 			HashMap<CompoundOrder, List<CompoundOrderItem>> compoundOrdersMap = new HashMap<>();
-			for (CompoundOrder order : orders) {
-				compoundOrdersMap.put(order,
+			for (Order order : orders) {
+				Double cost = 0.0;
+				for (CompoundOrderItem item : ordersMap.get(order.getOid())) {
+					cost += item.getCost();
+				}
+				compoundOrdersMap.put(new CompoundOrder(order, cost), 
 						ordersMap.get(order.getOid()));
 			}
 			return compoundOrdersMap;
