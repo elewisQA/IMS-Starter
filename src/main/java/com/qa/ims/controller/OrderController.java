@@ -1,7 +1,9 @@
 package com.qa.ims.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -9,6 +11,8 @@ import org.apache.logging.log4j.Logger;
 import com.qa.ims.persistence.dao.OrderDAO;
 import com.qa.ims.persistence.dao.OrderItemDAO;
 import com.qa.ims.persistence.domain.Order;
+import com.qa.ims.persistence.domain.OrderItem;
+import com.qa.ims.persistence.domain.CompoundOrder;
 import com.qa.ims.persistence.domain.OrderUpdateDomain;
 import com.qa.ims.persistence.domain.OrderReadDomain;
 import com.qa.ims.utils.Utils;
@@ -28,89 +32,21 @@ public class OrderController implements CrudController<Order> {
 	
 	@Override
 	public List<Order> readAll() {
-		OrderReadDomain domain;
-		
-		while (true) {
-			LOGGER.info("What should be read:");
-			OrderReadDomain.printDomains();
-			
-			domain = OrderReadDomain.getDomain(utils);
-			List<Order> toReturn = null;
-			switch (domain) {
-			case ALL:
-				toReturn = readAllActual();
-				break;
-			case HISTORY:
-				toReturn = readHistory();
-				break;
-			case CUSTOMER:
-				toReturn = readCustomer();
-				break;
-			case ONE:
-				toReturn = readOne();
-				break;
-			case COST:
-				readCost();
-				break;
-			case RETURN:
-				return toReturn;
-			default:
-				break;
+		List<Order> orders = orderDAO.readAll();
+		HashMap<CompoundOrder, List<OrderItem>> fullOrders = orderDAO.readEverything();
+		for (Map.Entry<CompoundOrder, List<OrderItem>> order : fullOrders.entrySet()) {
+			// Display Order information via CompoundOrder's toString()
+			LOGGER.info(order.getKey().toString());
+			// Iterate through OrderItems list
+			if (order.getValue() != null) {
+				for (OrderItem item : order.getValue()) {
+					LOGGER.info(" > " + item.toString());
+				}
+			} else {
+				LOGGER.info(" > No Items in order");
 			}
 		}
-	}
-	
-	/*
-	@Override 
-	public List<Order> readAll() {
-		List<Order> orders = orderDAO.readAll();
-		for (Order order : orders) {
-			LOGGER.info(order.toString());
-		}
 		return orders;
-	}
-	*/
-	
-	public List<Order> readAllActual() {
-		List<Order> orders = orderDAO.readAll();
-		for (Order order : orders) {
-			LOGGER.info(order.toString());
-		}
-		return orders;
-	}
-	
-	public List<Order> readHistory() {
-		List<Order> orders = orderDAO.readHistory();
-		for (Order order : orders) {
-			LOGGER.info(order.toString());
-		}
-		return orders;
-	}
-	
-	public List<Order> readCustomer() {
-		LOGGER.info("Enter the id of the customer whose orders you want to view");
-		Long cid = utils.getLong();
-		List<Order> orders = orderDAO.readCustomer(cid);
-		for (Order order : orders) {
-			LOGGER.info(order.toString());
-		}
-		return orders;
-	}
-	
-	public List<Order> readOne() {
-		LOGGER.info("Enter the id of the order you want to view");
-		Long oid = utils.getLong();
-		List<Order> orders = new ArrayList<>();
-		orders.add(orderDAO.readOrder(oid));
-		return orders;
-	}
-	
-	public void readCost() {
-		LOGGER.info("Enter the id of the order which cost you'd like to calculate");
-		Long oid = utils.getLong();
-		Double cost = orderDAO.readCost(oid);
-		LOGGER.info("The total-cost of order " + oid + " is: £" + cost);
-		return;
 	}
 	
 	@Override
