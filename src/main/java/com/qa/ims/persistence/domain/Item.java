@@ -2,17 +2,18 @@ package com.qa.ims.persistence.domain;
 
 public class Item {
 	
-	private Long id, cost;
+	private Long id;
+	private Double cost;
 	private String name;
 	private String description;
 	
-	public Item(String name, String description, Long cost) {
+	public Item(String name, String description, Double cost) {
 		this.setName(name);
 		this.setDescription(description);
 		this.setCost(cost);
 	}
 	
-	public Item(Long id, String name, String description, Long cost) {
+	public Item(Long id, String name, String description, Double cost) {
 		this.setId(id);
 		this.setName(name);
 		this.setDescription(description);
@@ -43,17 +44,18 @@ public class Item {
 		this.description = description;
 	}
 	
-	public Long getCost() {
+	public Double getCost() {
 		return cost;
 	}
 	
-	public void setCost(Long cost) {
+	public void setCost(Double cost) {
 		this.cost = cost;
 	}
 	
 	@Override
 	public String toString() {
-		return "id:" + id + " name:" + name + " description:" + description + " cost: £" + cost;
+		String toReturn = String.format("Item-ID: %-3d | Name: %-20s | Description: %-40s | Cost: £%-4.2f", id, name, description, cost);
+		return toReturn;
 	}
 	
 	@Override
@@ -63,6 +65,7 @@ public class Item {
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
+		result = prime * result + ((cost == null) ? 0 : cost.hashCode());
 		return result;
 	}
 	
@@ -84,13 +87,19 @@ public class Item {
 		if (id == null) {
 			if (other.id != null) 
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!id.equals(other.getId()))
 			return false;
 		if (description == null) {
 			if (other.description != null)
 				return false;
-		} else if (!description.equals(other.description))
+		} else if (!description.equals(other.getDescription()))
 			return false;
+		if (cost == null) {
+			if (other.cost != null)
+				return false;
+		} else if (!cost.equals(other.getCost())) {
+			return false;
+		}
 		return true;
 	}
 }

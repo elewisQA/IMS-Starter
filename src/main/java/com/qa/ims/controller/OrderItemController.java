@@ -26,7 +26,7 @@ public class OrderItemController implements CrudController<OrderItem> {
 
 	@Override 
 	public List<OrderItem> readAll() {
-		List<OrderItem> orderItems = orderItemDAO.readAll();
+		List<OrderItem> orderItems = orderItemDAO.readWhere(oid);
 		for (OrderItem orderItem : orderItems) {
 			LOGGER.info(orderItem.toString());
 		}
@@ -37,9 +37,7 @@ public class OrderItemController implements CrudController<OrderItem> {
 	public OrderItem create() {
 		LOGGER.info("Please enter an Item id");
 		Long iid = utils.getLong();
-		LOGGER.info("Please enter a quantity");
-		Long qty = utils.getLong();
-		OrderItem orderItem = orderItemDAO.create(new OrderItem(this.oid, iid, qty));
+		OrderItem orderItem = orderItemDAO.create(new OrderItem(this.oid, iid));
 		return orderItem;
 	}
 	
@@ -47,18 +45,16 @@ public class OrderItemController implements CrudController<OrderItem> {
 	public OrderItem update() {
 		LOGGER.info("Please enter an item-id");
 		Long iid = utils.getLong();
-		LOGGER.info("Please enter a quantity");
-		Long qty = utils.getLong();
-		OrderItem order = orderItemDAO.update(new OrderItem(oid, iid, qty));
+		OrderItem order = orderItemDAO.update(new OrderItem(oid, iid));
 		LOGGER.info("Order-Item updated");
 		return order;
 	}
 	
 	@Override
 	public int delete() {
-		LOGGER.info("Please enter the item-id of the order you would like to delete");
-		Long iid = utils.getLong();
+		LOGGER.info("Please enter the id of the order you would like to delete");
+		Long id = utils.getLong();
 		LOGGER.info("Order-Item deleted.");
-		return orderItemDAO.delete(iid);
+		return orderItemDAO.delete(id);
 	}
 }

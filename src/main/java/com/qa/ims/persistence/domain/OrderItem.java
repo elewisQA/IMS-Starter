@@ -2,20 +2,25 @@ package com.qa.ims.persistence.domain;
 
 public class OrderItem {
 	
-	private Long oid;
-	private Long iid;
-	private Long qty;
+	protected Long id, oid, iid;
 	
-	/*public OrderItem(Long cid, Long qty) {
-		// TODO is this necessary?
-		this.setIid(cid);
-		this.setQty(qty);
-	}*/
-	
-	public OrderItem(Long oid, Long iid, Long qty) {
+	public OrderItem(Long oid, Long iid) {
 		this.setOid(oid);
 		this.setIid(iid);
-		this.setQty(qty);
+	}
+	
+	public OrderItem(Long id, Long oid, Long iid) {
+		this.setId(id);
+		this.setOid(oid);
+		this.setIid(iid);
+	}
+	
+	public Long getId() {
+		return id;
+	}
+	
+	public void setId(Long id) {
+		this.id = id;
 	}
 	
 	public Long getOid() {
@@ -34,27 +39,20 @@ public class OrderItem {
 		this.iid = iid;
 	}
 	
-	public Long getQty() {
-		return qty;
-	}
-	
-	public void setQty(Long qty) {
-		this.qty = qty;
-	}
-	
 	@Override
 	public String toString() {
-		return "iid:" + iid + " qty:" + qty;
+		return "uuid: " + id + " | oid:" + oid + " | iid:" + iid;
 	}
 	
 	@Override 
 	public int hashCode() {
 		final int prime = 5;
 		int result = 1;
+		result = prime * result + (id.hashCode());
 		result = prime * result + (oid.hashCode());
 		result = prime * result + (iid.hashCode());
-		result = prime * result + (qty.hashCode());
 		return result;
+		//TODO set these to == null ? methods
 	}
 	
 	@Override
@@ -72,8 +70,8 @@ public class OrderItem {
 		if (getIid() == null) 
 			if (other.getIid() != null) 
 				return false;
-		if (getQty() == null)
-			if (other.getQty() != null) 
+		if (getId() == null)
+			if (other.getId() != null) 
 				return false;
 		return true;
 	}
