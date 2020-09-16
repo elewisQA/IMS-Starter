@@ -2,7 +2,7 @@ package com.qa.ims.persistence.domain;
 
 public class OrderItem {
 	
-	private Long id, oid, iid;
+	protected Long id, oid, iid;
 	
 	public OrderItem(Long oid, Long iid) {
 		this.setOid(oid);
@@ -42,7 +42,7 @@ public class OrderItem {
 	
 	@Override
 	public String toString() {
-		return "id: " + id + " oid:" + oid + " iid:" + id;
+		return "uuid: " + id + " | oid:" + oid + " | iid:" + id;
 	}
 	
 	@Override 
