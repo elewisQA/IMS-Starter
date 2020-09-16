@@ -179,7 +179,7 @@ public class OrderDAO implements Dao<Order> {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
 			statement.executeUpdate("UPDATE orders SET cid = " + order.getCid() 
-			+ ", address = '" + order.getAddress() + "', fulfilled = " + order.getFulfilled());
+			+ ", address = '" + order.getAddress() + "', fulfilled = " + order.getFulfilled() + " WHERE id = " + order.getOid());
 			return readOrder(order.getOid());
 		} catch (SQLException e) {
 			LOGGER.debug(e);
