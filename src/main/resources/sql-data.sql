@@ -8,6 +8,7 @@ INSERT INTO `ims`.`items` (`name`, `description`, `cost`) VALUES ('MOLTEN BORON'
 INSERT INTO `ims`.`items` (`name`, `description`, `cost`) VALUES ('THOMPSONS TEETH', 'The only teeth strong enough to eat other teeth', 2.55);
 INSERT INTO `ims`.`orders` (`cid`, `address`, `fulfilled`) VALUES (1, '123 house', FALSE);
 INSERT INTO `ims`.`orders` (`cid`, `address`, `fulfilled`) VALUES (2, 'Planet Express', TRUE);
+INSERT INTO `ims`.`orders` (`cid`, `address`, `fulfilled`) VALUES (3, 'Planet Express', FALSE);
 INSERT INTO `ims`.`order_items` (`oid`, `iid`) VALUES (1, 1);
 INSERT INTO `ims`.`order_items` (`oid`, `iid`) VALUES (1, 1);
 INSERT INTO `ims`.`order_items` (`oid`, `iid`) VALUES (1, 1);
