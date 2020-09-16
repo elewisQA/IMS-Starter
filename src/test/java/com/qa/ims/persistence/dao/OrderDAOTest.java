@@ -22,7 +22,9 @@ public class OrderDAOTest {
 	@Before
 	public void  setup() {
 		DBUtils.connect("src/test/resources/db.properties");
-		DBUtils.getInstance().init("src/test/resources/sql-schema.sql", "src/test/resources/sql-data.sql");
+		// Use a different sql-data file to other tests, as this one contains a customer and item with which to create orders.
+		DBUtils.getInstance().init("src/test/resources/sql-schema.sql", "src/test/resources/order-sql-data.sql");
+		
 	}
 	
 	@Test
@@ -33,8 +35,6 @@ public class OrderDAOTest {
 	
 	@Test
 	public void testReadAll() {
-		// TODO add a before to insert an item
-		// TODO add a before to insert a customer
 		List<Order> expected = new ArrayList<>();
 		expected.add(new Order(1L, 1L, "123 Fake-Street", false));
 		assertEquals(expected, DAO.readAll());
@@ -45,8 +45,7 @@ public class OrderDAOTest {
 		// TODO add a before here to insert an order-item
 		HashMap<CompoundOrder, List<CompoundOrderItem>> expectedMap = new HashMap<>();
 		List<CompoundOrderItem> expectedList = new ArrayList<>();
-		CompoundOrderItem coi = new CompoundOrderItem(1L, 1L, 1L, "Slurm", 1.99);
-		expectedList.add(coi);
+		// TODO find way to test reading an order-item
 		CompoundOrder co = new CompoundOrder(1L, 1L, 1.99, "123 Fake-Street", false);
 		expectedMap.put(co, expectedList);
 		assertEquals(expectedMap, DAO.readEverything()); 
