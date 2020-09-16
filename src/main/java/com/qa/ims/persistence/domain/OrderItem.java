@@ -7,7 +7,6 @@ public class OrderItem {
 	public OrderItem(Long oid, Long iid) {
 		this.setOid(oid);
 		this.setIid(iid);
-		
 	}
 	
 	public OrderItem(Long id, Long oid, Long iid) {
@@ -42,7 +41,7 @@ public class OrderItem {
 	
 	@Override
 	public String toString() {
-		return "uuid: " + id + " | oid:" + oid + " | iid:" + id;
+		return "uuid: " + id + " | oid:" + oid + " | iid:" + iid;
 	}
 	
 	@Override 
