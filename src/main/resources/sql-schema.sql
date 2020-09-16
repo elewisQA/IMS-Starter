@@ -26,10 +26,10 @@ CREATE TABLE IF NOT EXISTS `ims`.`orders` (
 );
 
 CREATE TABLE IF NOT EXISTS `ims`.`order_items` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
 	`oid` INT(11),
 	`iid` INT(11),
-	`qty` INT(11) DEFAULT 1,
-	PRIMARY KEY(`oid`,`iid`),
+	PRIMARY KEY(`id`),
 	FOREIGN KEY(`oid`) REFERENCES `ims`.`orders`(`id`),
 	FOREIGN KEY(`iid`) REFERENCES `ims`.`items`(`id`)
 );
