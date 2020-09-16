@@ -24,10 +24,12 @@ public class ItemController implements CrudController<Item> {
 	
 	@Override
 	public List<Item> readAll() {
+		LOGGER.info(String.format("%13s|%28s|%55s|%13s|", "-", "-", "-", "-").replace(' ', '-'));
 		List<Item> items = itemDAO.readAll();
 		for (Item i : items) {
 			LOGGER.info(i.toString());
 		}
+		LOGGER.info(String.format("%13s|%28s|%55s|%13s|\n", "-", "-", "-", "-").replace(' ', '-'));
 		return items;
 	}
 	
@@ -38,32 +40,32 @@ public class ItemController implements CrudController<Item> {
 		LOGGER.info("Please enter a description");
 		String description = utils.getString().toUpperCase();
 		LOGGER.info("Please enter a cost");
-		Long cost = utils.getLong();
+		Double cost = utils.getDouble();
 		Item item = itemDAO.create(new Item(name, description, cost));
-		LOGGER.info("Item created");
+		LOGGER.info("Item created!\n");
 		return item;
 	}
 	
 	@Override
 	public Item update() {
-		LOGGER.info("Please enter the id of the item you would like to update");
+		LOGGER.info("Please enter the ID of the item you would like to update:");
 		Long id = utils.getLong();
-		LOGGER.info("Please enter a name");
+		LOGGER.info("Please enter a name:");
 		String name = utils.getString().toUpperCase();
-		LOGGER.info("Please enter a description");
+		LOGGER.info("Please enter a description:");
 		String description = utils.getString().toUpperCase();
-		LOGGER.info("Please enter a cost");
-		Long cost = utils.getLong();
+		LOGGER.info("Please enter a cost:");
+		Double cost = utils.getDouble();
 		Item item = itemDAO.update(new Item(id, name, description, cost));
-		LOGGER.info("Item updated");
+		LOGGER.info("Item updated!\n");
 		return item;
 	}
 	
 	@Override
 	public int delete() {
-		LOGGER.info("Please enter the id of the customer you would like to delete");
+		LOGGER.info("Please enter the ID of the customer you would like to delete:");
 		Long id = utils.getLong();
-		LOGGER.info("Item deleted.");
+		LOGGER.info("Item deleted!\n");
 		return itemDAO.delete(id);
 		
 	}

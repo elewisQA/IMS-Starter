@@ -54,7 +54,8 @@ public class Item {
 	
 	@Override
 	public String toString() {
-		return "id:" + id + " name:" + name + " description:" + description + " cost: £" + cost;
+		String toReturn = String.format("Item-ID: %-3d | Name: %-20s | Description: %-40s | Cost: £%-4.2f", id, name, description, cost);
+		return toReturn;
 	}
 	
 	@Override
