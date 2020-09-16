@@ -14,7 +14,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.qa.ims.persistence.domain.Order;
-import com.qa.ims.persistence.domain.OrderItem;
+import com.qa.ims.persistence.domain.CompoundOrderItem;
 import com.qa.ims.persistence.domain.CompoundOrder;
 import com.qa.ims.utils.DBUtils;
 
@@ -40,11 +40,13 @@ public class OrderDAO implements Dao<Order> {
 		return new CompoundOrder(oid, cid, cost, address, fulfilled);
 	}
 	
-	public OrderItem modelOrderItemFromResultSet(ResultSet resultSet) throws SQLException {
+	public CompoundOrderItem modelCompoundOrderItemFromResultSet(ResultSet resultSet) throws SQLException {
 		Long id = resultSet.getLong("id");
-		Long oid = resultSet.getLong("oid");
 		Long iid = resultSet.getLong("iid");
-		return new OrderItem(id, oid, iid);
+		Long oid = resultSet.getLong("oid");
+		String name = resultSet.getString("name");
+		Double cost = resultSet.getDouble("cost");
+		return new CompoundOrderItem(id, oid, iid, name, cost);
 	}
 	
 	@Override
@@ -69,7 +71,7 @@ public class OrderDAO implements Dao<Order> {
 		return new ArrayList<>();
 	}
 	
-	public HashMap<CompoundOrder, List<OrderItem>> readEverything() {
+	public HashMap<CompoundOrder, List<CompoundOrderItem>> readEverything() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement orderStatement = connection.createStatement();
 				// Complex query to get order and order cost using Order_Items and Items tables 
@@ -81,25 +83,27 @@ public class OrderDAO implements Dao<Order> {
 				// Get everything from Order_items table
 				Statement itemStatement = connection.createStatement();
 				ResultSet orderItemResults = itemStatement.executeQuery(""
-						+ "SELECT * FROM order_items")) {
+						+ "SELECT order_items.id, order_items.iid, order_items.oid, items.name, items.cost "
+						+ "FROM order_items, items "
+						+ "WHERE order_items.iid = items.id")) {
 			List<CompoundOrder> orders = new ArrayList<>();
-			HashMap<Long, List<OrderItem>> ordersMap =  new HashMap<>();
+			HashMap<Long, List<CompoundOrderItem>> ordersMap =  new HashMap<>();
 			while (orderResults.next()) {
 				orders.add(modelCompoundFromResultSet(orderResults));
-				ordersMap.put(modelCompoundFromResultSet(orderResults).getOid(), new ArrayList<OrderItem>());
+				ordersMap.put(modelCompoundFromResultSet(orderResults).getOid(), new ArrayList<CompoundOrderItem>());
 			}
 			
 			// Store a list of all order-items using a map with key of order-id
 			// This gets a list by id, updates it and puts it back
 			// TODO grab reference so I don't have to put-back
 			while (orderItemResults.next()) {
-				OrderItem oi = modelOrderItemFromResultSet(orderItemResults);
-				List<OrderItem> list = ordersMap.get(oi.getOid());
+				CompoundOrderItem oi = modelCompoundOrderItemFromResultSet(orderItemResults);
+				List<CompoundOrderItem> list = ordersMap.get(oi.getOid());
 				list.add(oi);
 				ordersMap.put(oi.getOid(), list);		
 			}
 			
-			HashMap<CompoundOrder, List<OrderItem>> compoundOrdersMap = new HashMap<>();
+			HashMap<CompoundOrder, List<CompoundOrderItem>> compoundOrdersMap = new HashMap<>();
 			for (CompoundOrder order : orders) {
 				compoundOrdersMap.put(order,
 						ordersMap.get(order.getOid()));

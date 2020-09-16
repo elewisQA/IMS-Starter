@@ -11,7 +11,7 @@ import org.apache.logging.log4j.Logger;
 import com.qa.ims.persistence.dao.OrderDAO;
 import com.qa.ims.persistence.dao.OrderItemDAO;
 import com.qa.ims.persistence.domain.Order;
-import com.qa.ims.persistence.domain.OrderItem;
+import com.qa.ims.persistence.domain.CompoundOrderItem;
 import com.qa.ims.persistence.domain.CompoundOrder;
 import com.qa.ims.persistence.domain.OrderUpdateDomain;
 import com.qa.ims.utils.Utils;
@@ -32,13 +32,13 @@ public class OrderController implements CrudController<Order> {
 	@Override
 	public List<Order> readAll() {
 		List<Order> orders = orderDAO.readAll();
-		HashMap<CompoundOrder, List<OrderItem>> fullOrders = orderDAO.readEverything();
-		for (Map.Entry<CompoundOrder, List<OrderItem>> order : fullOrders.entrySet()) {
+		HashMap<CompoundOrder, List<CompoundOrderItem>> fullOrders = orderDAO.readEverything();
+		for (Map.Entry<CompoundOrder, List<CompoundOrderItem>> order : fullOrders.entrySet()) {
 			// Display Order information via CompoundOrder's toString()
 			LOGGER.info(order.getKey().toString());
 			// Iterate through OrderItems list
 			if (order.getValue() != null) {
-				for (OrderItem item : order.getValue()) {
+				for (CompoundOrderItem item : order.getValue()) {
 					LOGGER.info(" > " + item.toString());
 				}
 			} else {
