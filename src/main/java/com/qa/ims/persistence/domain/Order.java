@@ -54,7 +54,7 @@ public class Order {
 	
 	@Override
 	public String toString() {
-		return "oid:" + oid + " cid:" + cid + " address:" + address + " fulfilled:" + fulfilled;
+		return "Order ID:" + oid + " Customer ID:" + cid + " Delivery Address:" + address + " Order Dispatched:" + fulfilled;
 	}
 	
 	@Override
