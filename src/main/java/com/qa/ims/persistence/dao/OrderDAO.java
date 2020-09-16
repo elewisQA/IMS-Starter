@@ -195,7 +195,6 @@ public class OrderDAO implements Dao<Order> {
 	public int delete(long oid) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("delete from order_items where oid = " + oid); // Foreign Key constraint
 			return statement.executeUpdate("delete from orders where id = " + oid);
 		} catch (SQLException e) {
 			LOGGER.debug(e);
