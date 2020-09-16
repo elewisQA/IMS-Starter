@@ -47,6 +47,26 @@ public class OrderItemDAO implements Dao<OrderItem> {
 		}
 		return new ArrayList<>();
 	}
+	
+	public List<OrderItem> readWhere(Long oid) {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement.executeQuery("SELECT * FROM order_items WHERE oid = " + oid);) {
+			List<OrderItem> orderItems = new ArrayList<>();
+			while (resultSet.next()) {
+				orderItems.add(modelFromResultSet(resultSet));
+			}
+			return orderItems;
+		} catch (SQLException e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		} catch (Exception e) {
+			LOGGER.error("Generic Exception - Something went seriously wrong.");
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return new ArrayList<>();
+	}
 
 	public OrderItem readLatest() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
@@ -70,7 +90,7 @@ public class OrderItemDAO implements Dao<OrderItem> {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
 			statement.executeUpdate("INSERT INTO order_items(oid, iid) VALUES(" 
-				+ orderItem.getOid() + "," + orderItem.getIid() + ") WHERE id = " + orderItem.getId());
+				+ orderItem.getOid() + ", " + orderItem.getIid() + ")");
 			return readLatest();
 		} catch (SQLException e) {
 			LOGGER.debug(e);

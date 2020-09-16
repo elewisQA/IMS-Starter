@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS `ims`.`orders` (
 	`address` VARCHAR(40) NULL DEFAULT NULL,
 	`fulfilled` BOOLEAN DEFAULT FALSE,
 	PRIMARY KEY(`id`),
-	FOREIGN KEY(`cid`) REFERENCES `ims`.`customers`(`id`)
+	FOREIGN KEY(`cid`) REFERENCES `ims`.`customers`(`id`) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `ims`.`order_items` (
@@ -30,6 +30,6 @@ CREATE TABLE IF NOT EXISTS `ims`.`order_items` (
 	`oid` INT(11),
 	`iid` INT(11),
 	PRIMARY KEY(`id`),
-	FOREIGN KEY(`oid`) REFERENCES `ims`.`orders`(`id`),
-	FOREIGN KEY(`iid`) REFERENCES `ims`.`items`(`id`)
+	FOREIGN KEY(`oid`) REFERENCES `ims`.`orders`(`id`) ON DELETE CASCADE,
+	FOREIGN KEY(`iid`) REFERENCES `ims`.`items`(`id`) ON DELETE CASCADE
 );

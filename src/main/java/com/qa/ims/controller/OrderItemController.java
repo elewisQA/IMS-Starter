@@ -26,7 +26,7 @@ public class OrderItemController implements CrudController<OrderItem> {
 
 	@Override 
 	public List<OrderItem> readAll() {
-		List<OrderItem> orderItems = orderItemDAO.readAll();
+		List<OrderItem> orderItems = orderItemDAO.readWhere(oid);
 		for (OrderItem orderItem : orderItems) {
 			LOGGER.info(orderItem.toString());
 		}

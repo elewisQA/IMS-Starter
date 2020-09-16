@@ -2,10 +2,9 @@ package com.qa.ims.persistence.domain;
 
 public class Order {
 	
-	private Long oid;
-	private Long cid;
-	private String address;
-	private Boolean fulfilled;
+	protected Long oid, cid;
+	protected String address;
+	protected Boolean fulfilled;
 	
 	public Order(Long cid, String address, Boolean fulfilled) {
 		this.setCid(cid);
@@ -83,8 +82,8 @@ public class Order {
 		if (getOid() == null)
 			if (other.getOid() != null)
 				return false;
-		if (address == null) {
-			if (other.address != null)
+		if (getAddress() == null) {
+			if (other.getAddress() != null)
 				return false;
 		} else if (!address.equals(other.address))
 			return false;
