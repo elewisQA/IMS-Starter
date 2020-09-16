@@ -92,9 +92,7 @@ public class OrderDAO implements Dao<Order> {
 			// Iterate through Results - putting into map with key Order-ID
 			while (resultSet.next()) {
 				CompoundOrderItem oi = modelCompoundOrderItemFromResultSet(resultSet);
-				List<CompoundOrderItem> list = ordersMap.get(oi.getOid());
-				list.add(oi);
-				ordersMap.put(oi.getOid(), list);		
+				ordersMap.get(oi.getOid()).add(oi); // Put into List where OID matches key
 			}
 			
 			// Calculate Cost of each order
