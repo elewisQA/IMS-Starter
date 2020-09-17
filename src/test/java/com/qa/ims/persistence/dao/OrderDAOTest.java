@@ -51,6 +51,20 @@ public class OrderDAOTest {
 	}
 	
 	@Test
+	public void testReadOrder() {
+		final long ID = 1L;
+		assertEquals(new Order(ID, 1L, "123 Fake-Street", false), DAO.readOrder(ID));
+	}
+	
+	@Test
+	public void testToString() {
+		final long ID = 1L;
+		Order created = new Order(ID, 1L, "123 Fake-Street", false);
+		assertEquals(created.toString(), DAO.readOrder(ID).toString());
+		
+	}
+	
+	@Test
 	public void testUpdate() {
 		final Order updated = new Order(1L, 1L, "124 Fake-Street", true);
 		assertEquals(updated, DAO.update(updated));

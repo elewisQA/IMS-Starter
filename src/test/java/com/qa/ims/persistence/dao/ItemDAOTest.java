@@ -43,6 +43,14 @@ public class ItemDAOTest {
 	}
 	
 	@Test
+	public void testToString() {
+		final long ID = 1L;
+		Item created = new Item(ID, "Slurm", "Slurm Cola!", 1.99);
+		assertEquals(created.toString(), DAO.readItem(ID).toString());
+	
+	}
+	
+	@Test
 	public void testUpdate() {
 		final Item updated = new Item(1L, "Slurm Classic", "Original Slurm Recipe!", 1.55);
 		assertEquals(updated, DAO.update(updated));

@@ -53,9 +53,17 @@ public class OrderItemDAOTest {
 	}
 	
 	@Test
-	public void readOrderItem() {
-		OrderItem created = new OrderItem(1L, 1L, 1L);
-		assertEquals(created, DAO.readOrderItem(1L));
+	public void testReadOrderItem() {
+		final long ID = 1L;
+		OrderItem created = new OrderItem(ID, 1L, 1L);
+		assertEquals(created, DAO.readOrderItem(ID));
+	}
+	
+	@Test
+	public void testToString() {
+		final long ID = 1L;
+		OrderItem created = new OrderItem(ID, 1L, 1L);
+		assertEquals(created.toString(), DAO.readOrderItem(ID).toString());
 	}
 	
 	@Test
