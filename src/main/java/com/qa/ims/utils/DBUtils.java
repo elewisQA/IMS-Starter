@@ -37,7 +37,9 @@ public class DBUtils {
 	}
 
 	public DBUtils() {
-		this("src/main/resources/db.properties");
+		DB_URL = "jdbc:mysql://localhost:3306/ims?db_name&serverTimezone=UTC";
+		DB_USER = "java";
+		DB_PASS = "password";
 	}
 
 	public int init() {
