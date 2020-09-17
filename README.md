@@ -21,37 +21,41 @@ For development:
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
+1. To setup a development environment, you will need to clone either the master-branch or the dev-branch 
+of this repository.  
+2. Once the directory is cloned, open it in the IDE of your choice.  
 
-Say what the step will be
+3. Inside `src/main/java/com/qa/ims/utils/DBUtils.java` you will need to modify the 'connect()' method 
+with your own database connection information. Alternatively, modify the database properties method and 
+modify `src/main/java/com/qa/ims/IMS.java` to pass the file location of 'properties.db' to `connect()`.  
 
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
+4. Run the 'Runner.java' class under `src/main/java/com/qa/ims` and the application should start and 
+connect to your database, creating the IMS database and its tables.  
 
 ## Running the tests
 
-Explain how to run the automated tests for this system. Break down into which tests and what they do
+All tests are located under the `src/test` directory.  
 
 ### Unit Tests 
 
-Explain what these tests test, why and how to run them
+These tests cover some basics, such as ensuring that classes like Order or Item have correct equals() and 
+hashCode() methods.  
+  
+The tests for the Data-Access Objects (DAOs) are a bit more complex, passing in objects, ensuring they are 
+processed correctly and that the correct information is passed back.  
 
-```
-Give an example
-```
+Lastly, there are some Mockito tests for the Controller classes which simulate user-input to check that 
+objects are created and handled properly.  
+  
+If you are using an IDE such as Intellij or Eclipse, you will be able to run these tests by right-clicking 
+the classes and selecting the "Run as JUnit test" option.  
+  
+Alternatively, if you are working in eclipse, you can right-click the project folder and select the 
+'Coverage As...' option.
 
 ## Deployment
 
-Add additional notes about how to deploy this on a live system
+No CI was used with this project. 
 
 ## Built With
 
