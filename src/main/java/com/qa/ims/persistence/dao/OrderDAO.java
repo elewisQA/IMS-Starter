@@ -55,7 +55,6 @@ public class OrderDAO implements Dao<Order> {
 				Statement statement = connection.createStatement();
 				ResultSet resultSet = statement.executeQuery("SELECT * FROM orders");) {
 			List<Order> orders = new ArrayList<>();
-			List<CompoundOrder> cOrders = new ArrayList<>();
 			while (resultSet.next()) {
 				orders.add(modelFromResultSet(resultSet));
 			}
@@ -121,10 +120,7 @@ public class OrderDAO implements Dao<Order> {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
 				ResultSet resultSet = statement.executeQuery(""
-						+ "SELECT orders.id, orders.cid, order_items.iid, SUM(items.cost), orders.address, orders.fulfilled "
-						+ "FROM orders, order_items, items "
-						+ "WHERE orders.id = order_items.oid "
-						+ "AND order_items.iid = items.id "
+						+ "SELECT * FROM orders "
 						+ "ORDER BY orders.id DESC LIMIT 1");) {
 			resultSet.next();
 			return modelFromResultSet(resultSet);
