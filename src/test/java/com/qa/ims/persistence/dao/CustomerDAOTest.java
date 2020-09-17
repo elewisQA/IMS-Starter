@@ -19,8 +19,6 @@ public class CustomerDAOTest {
 	public void setup() {
 		DBUtils.connect("src/test/resources/db.properties");
 		DBUtils.getInstance().init("src/test/resources/sql-schema.sql", "src/test/resources/sql-data.sql");
-		Customer c = new Customer(1L, "jordan", "harrison");
-		DAO.create(c);
 	}
 
 	@Test
