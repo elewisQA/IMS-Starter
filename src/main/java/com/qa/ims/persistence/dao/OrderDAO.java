@@ -55,7 +55,6 @@ public class OrderDAO implements Dao<Order> {
 				Statement statement = connection.createStatement();
 				ResultSet resultSet = statement.executeQuery("SELECT * FROM orders");) {
 			List<Order> orders = new ArrayList<>();
-			List<CompoundOrder> cOrders = new ArrayList<>();
 			while (resultSet.next()) {
 				orders.add(modelFromResultSet(resultSet));
 			}
@@ -64,7 +63,7 @@ public class OrderDAO implements Dao<Order> {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
 		} catch (Exception e) {
-			LOGGER.error("Generic Exception - Something went seriously wrong.");
+			LOGGER.error("Generic Exception - Something went seriously wrong. [OrderDAO - ReadAll]");
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
 		}
@@ -73,7 +72,6 @@ public class OrderDAO implements Dao<Order> {
 	
 	public HashMap<CompoundOrder, List<CompoundOrderItem>> readEverything() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
-				Statement orderStatement = connection.createStatement();
 				// Get everything from Order_items table
 				Statement statement = connection.createStatement();
 				ResultSet resultSet = statement.executeQuery(""
@@ -95,22 +93,22 @@ public class OrderDAO implements Dao<Order> {
 				ordersMap.get(oi.getOid()).add(oi); // Put into List where OID matches key
 			}
 			
-			// Calculate Cost of each order
 			HashMap<CompoundOrder, List<CompoundOrderItem>> compoundOrdersMap = new HashMap<>();
 			for (Order order : orders) {
 				Double cost = 0.0;
+				// Sum cost from items
 				for (CompoundOrderItem item : ordersMap.get(order.getOid())) {
 					cost += item.getCost();
 				}
-				compoundOrdersMap.put(new CompoundOrder(order, cost), 
-						ordersMap.get(order.getOid()));
+				CompoundOrder co = new CompoundOrder(order, cost);
+				compoundOrdersMap.put(co, ordersMap.get(order.getOid()));
 			}
 			return compoundOrdersMap;
 		} catch (SQLException e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
 		} catch (Exception e) {
-			LOGGER.error("Generic Exception - Something went seriously wrong.");
+			LOGGER.error("Generic Exception - Something went seriously wrong. [Order DAO - ReadEverything]");
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
 		}
@@ -121,10 +119,7 @@ public class OrderDAO implements Dao<Order> {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
 				ResultSet resultSet = statement.executeQuery(""
-						+ "SELECT orders.id, orders.cid, order_items.iid, SUM(items.cost), orders.address, orders.fulfilled "
-						+ "FROM orders, order_items, items "
-						+ "WHERE orders.id = order_items.oid "
-						+ "AND order_items.iid = items.id "
+						+ "SELECT * FROM orders "
 						+ "ORDER BY orders.id DESC LIMIT 1");) {
 			resultSet.next();
 			return modelFromResultSet(resultSet);

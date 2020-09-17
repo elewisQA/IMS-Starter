@@ -2,7 +2,8 @@ package com.qa.ims.persistence.domain;
 
 public class Order {
 	
-	protected Long oid, cid;
+	protected Long oid;
+	protected Long cid;
 	protected String address;
 	protected Boolean fulfilled;
 	
@@ -60,10 +61,10 @@ public class Order {
 	public int hashCode() {
 		final int prime = 7;
 		int result = 1;
-		result = prime * result + (oid.hashCode());
-		result = prime * result + (cid.hashCode());
+		result = prime * result + ((oid == null) ? 0 : Long.hashCode(oid));
+		result = prime * result + ((cid == null) ? 0 : Long.hashCode(cid));
 		result = prime * result + ((address == null) ? 0 : address.hashCode());
-		result = prime * result + (fulfilled.hashCode());
+		result = prime * result + ((fulfilled == null) ? 0 : Boolean.hashCode(fulfilled));
 		return result;
 	}
 	
@@ -76,19 +77,30 @@ public class Order {
 		if (getClass() != obj.getClass())
 			return false;
 		Order other = (Order) obj;
-		if (getCid() == null) 
+		// Compare Order-ID
+		if (oid == null) {
+			if (other.oid != null)
+				return false;
+		} else if (!oid.equals(other.oid)) 
+			return false;
+		// Compare Customer-ID
+		if (getCid() == null) {
 			if (other.getCid() != null)
 				return false;
-		if (getOid() == null)
-			if (other.getOid() != null)
-				return false;
+		} else if (!getCid().equals(other.getCid())) 
+			return false;
+		// Compare Delivery Address
 		if (getAddress() == null) {
 			if (other.getAddress() != null)
 				return false;
-		} else if (!address.equals(other.address))
+		} else if (!getAddress().equals(other.getAddress()))
 			return false;
-		if (fulfilled == other.getFulfilled())
-			return true;
+		// Compare fulfilment status
+		if (getFulfilled() == null) {
+			if (other.getFulfilled() != null)
+				return false;
+		} else if(!getFulfilled().equals(other.getFulfilled()))
+			return false;
 		return true;
 	}
 }
