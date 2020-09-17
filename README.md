@@ -1,5 +1,4 @@
-Coverage: 34%
-# Project Title
+# Inventory Management System
 
 Inventory-Management-System is a Java program using an MySQL backend.
 This project is done as part of the QA Academy.
@@ -12,9 +11,13 @@ These instructions will get you a copy of the project up and running on your loc
 
 What things you need to install the software and how to install them
 
-```
-Java 11
-```
+* Java 7 or later  
+
+For development:   
+
+* Eclipse or Intellij (or any other suitable IDE)
+* Maven  
+* MySQL 5.7 Instance
 
 ### Installing
 
@@ -46,21 +49,6 @@ Explain what these tests test, why and how to run them
 Give an example
 ```
 
-### Integration Tests 
-Explain what these tests test, why and how to run them
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
 ## Deployment
 
 Add additional notes about how to deploy this on a live system
@@ -71,11 +59,15 @@ Add additional notes about how to deploy this on a live system
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning.
+Project uses [SemVer](http://semver.org/) for versioning.
 
 ## Authors
 
 * **Chris Perrins** - *Initial work* - [christophperrins](https://github.com/christophperrins)
+* **Jordan Harrison** - *IMS Starter* - 
+[JHarry444](https://github.com/JHarry444/IMS-Starter)
+* **Nick Johnson** - *Updated IMS Starter* 
+[nickrstewarttds](https://github.com/nickrstewarttds/IMS-Starter)
 
 ## License
 
@@ -85,6 +77,5 @@ This project is licensed under the MIT license - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+* Thanks to my trainers Nick & Piers for being very helpful
+* Thanks to Shafeeq for all the SQL training
