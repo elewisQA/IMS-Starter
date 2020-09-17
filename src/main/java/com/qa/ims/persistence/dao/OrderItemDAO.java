@@ -126,6 +126,7 @@ public class OrderItemDAO implements Dao<OrderItem> {
 				Statement statement = connection.createStatement();) {
 			statement.executeUpdate("UPDATE order_items SET oid = " + orderItem.getOid() + ", iid = "
 				+ orderItem.getIid());
+			// TODO change to read latest?
 			return readOrderItem(orderItem.getOid());
 		} catch (SQLException e) {
 			LOGGER.debug(e);

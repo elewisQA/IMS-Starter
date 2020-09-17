@@ -48,11 +48,10 @@ public class OrderItem {
 	public int hashCode() {
 		final int prime = 5;
 		int result = 1;
-		result = prime * result + (id.hashCode());
-		result = prime * result + (oid.hashCode());
-		result = prime * result + (iid.hashCode());
+		result = prime * result + ((id == null) ? 0 : Long.hashCode(id));
+		result = prime * result + ((oid == null) ? 0 : Long.hashCode(oid));
+		result = prime * result + ((iid == null) ? 0 : Long.hashCode(iid));
 		return result;
-		//TODO set these to == null ? methods
 	}
 	
 	@Override
@@ -64,15 +63,21 @@ public class OrderItem {
 		if (getClass() != obj.getClass())
 			return false;
 		OrderItem other = (OrderItem) obj;
-		if (getOid() == null) 
-			if (other.getOid() != null)
-				return false;
-		if (getIid() == null) 
-			if (other.getIid() != null) 
-				return false;
-		if (getId() == null)
+		if (getId() == null) {
 			if (other.getId() != null) 
 				return false;
+		} else if (!id.equals(other.getId()))
+			return false;
+		if (getOid() == null) {
+			if (other.getOid() != null)
+				return false;
+		} else if (!oid.equals(other.getOid()))
+				return false;
+		if (getIid() == null) {
+			if (other.getIid() != null) 
+				return false;
+		} else if (!iid.equals(other.getIid()))
+			return false;
 		return true;
 	}
 }

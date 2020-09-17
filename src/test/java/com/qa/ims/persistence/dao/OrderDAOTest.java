@@ -24,9 +24,6 @@ public class OrderDAOTest {
 		DBUtils.connect("src/test/resources/db.properties");
 		// Use a different sql-data file to other tests, as this one contains a customer and item with which to create orders.
 		DBUtils.getInstance().init("src/test/resources/sql-schema.sql", "src/test/resources/order-sql-data.sql");
-		// TODO move this create statement to sql-data
-		Order order = new Order(1L, "123 Fake-Street", false);
-		DAO.create(order);
 	}
 	
 	@Test

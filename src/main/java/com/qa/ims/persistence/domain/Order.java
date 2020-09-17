@@ -64,7 +64,7 @@ public class Order {
 		result = prime * result + ((oid == null) ? 0 : Long.hashCode(oid));
 		result = prime * result + ((cid == null) ? 0 : Long.hashCode(cid));
 		result = prime * result + ((address == null) ? 0 : address.hashCode());
-		result = prime * result + ((fulfilled = null) ? 0 : Boolean.hashCode(fulfilled));
+		result = prime * result + ((fulfilled == null) ? 0 : Boolean.hashCode(fulfilled));
 		return result;
 	}
 	
